@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/grupo_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="118dp"
+        android:layout_marginBottom="60dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_verificar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_green_light"
+                android:onClick="verifier"
+                android:text="@string/btn_verificar"
+                android:textColor="@color/ltBranco" />
+
+            <Button
+                android:id="@+id/btn_ajuda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1"
+                android:background="@color/ltAzul"
+                android:text="@string/btn_ajuda"
+                android:textColor="@color/ltBranco" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_desistir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_red_dark"
+            android:text="@string/btn_desistir"
+            android:textColor="@color/ltBranco" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/grupo_lbl"
+        android:layout_width="360dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="30dp"
+        android:background="#FAD2D8DA"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/grupo_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/slb_01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:longClickable="true"
+            android:text="A"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/slb_02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="BA"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/slb_03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="CA"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/slb_04"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="XI"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/grupo_encaixes"
+        android:layout_width="404dp"
+        android:layout_height="110dp"
+        android:layout_marginBottom="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/grupo_lbl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_palavra"
+        app:layout_constraintVertical_bias="1.0">
+
+        <LinearLayout
+            android:id="@+id/slt_01"
+            android:layout_width="95dp"
+            android:layout_height="80dp"
+            android:layout_marginRight="4dp"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="horizontal"></LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/slt_02"
+            android:layout_width="95dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="horizontal"></LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/slt_03"
+            android:layout_width="95dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            tools:visibility="visible"></LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/slt_04"
+            android:layout_width="95dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="4dp"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="horizontal" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/img_palavra"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/ltPreto"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

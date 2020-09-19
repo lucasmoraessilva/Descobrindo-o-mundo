@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <!-- Cores usadas pela Light Tech -->
+    <color name="ltVerdeClaro">#0FFEDC</color>
+    <color name="ltBranco">#FFFFFF</color>
+    <color name="ltPreto">#000000</color>
+    <color name="ltRoxo">#7C7CE0</color>
+    <color name="ltAzul">#348CDB</color>
+    <color name="ltAmarelo">#F1C232</color>
+    <color name="ltLaranja">#E69138</color>
+</resources>

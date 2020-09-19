@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login">
+
+    <ImageView
+        android:id="@+id/img_perfil"
+        android:layout_width="239dp"
+        android:layout_height="253dp"
+        android:layout_marginTop="48dp"
+        android:background="@color/ltPreto"
+        android:contentDescription="@string/img_perfil_descricao"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <EditText
+        android:id="@+id/txt_email"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="320dp"
+        android:ems="10"
+        android:hint="@string/txt_email"
+        android:inputType="textEmailAddress"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/txt_senha"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:hint="@string/txt_senha"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_email" />
+
+    <LinearLayout
+        android:id="@+id/grupo_btn"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_senha">
+
+        <Button
+            android:id="@+id/btn_entrar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2.5dp"
+            android:layout_weight="1"
+            android:width="150dp"
+            android:background="@android:color/holo_green_light"
+            android:maxWidth="150dp"
+            android:minWidth="149dp"
+            android:text="@string/btn_entrar"
+            android:textColor="@color/ltBranco" />
+
+        <Button
+            android:id="@+id/btn_cadastre_se"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2.5dp"
+            android:layout_weight="1"
+            android:width="150dp"
+            android:background="@color/ltAzul"
+            android:maxWidth="150dp"
+            android:minWidth="149dp"
+            android:text="@string/btn_cadastre_se"
+            android:textColor="@color/ltBranco" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lnk_esqueci_minha_senha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/txt_esqueci_minha_senha"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/grupo_btn" />
+</androidx.constraintlayout.widget.ConstraintLayout>
