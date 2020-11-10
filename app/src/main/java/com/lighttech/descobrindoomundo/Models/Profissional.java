@@ -1,17 +1,38 @@
 package com.lighttech.descobrindoomundo.Models;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import com.lighttech.descobrindoomundo.Enums.TipoUsuario;
 
-public class Profissional extends Usuario {
-    private Long idProfissional;
+public class Profissional {
+
+    private int idProfissional;
     private String crm;
 
-    public Profissional(Long idUsuario, Long idProfissional, String crm, String nome, String email, String senha, Date dataNascimento, TipoUsuario tipo)
-    {
-        super(idUsuario, nome, email, senha, dataNascimento, tipo);
+    public int getIdProfissional() {
+        return idProfissional;
+    }
+
+    public void setIdProfissional(int idProfissional) {
         this.idProfissional = idProfissional;
+    }
+
+    public String getCrm() {
+        return crm;
+    }
+
+    public void setCrm(String crm) {
         this.crm = crm;
+    }
+
+    public Profissional(){}
+
+    @Override
+    public String toString() {
+        return "Profissional{" +
+                "idProfissional=" + idProfissional +
+                ", crm='" + crm + '\'' +
+                '}';
     }
 }
