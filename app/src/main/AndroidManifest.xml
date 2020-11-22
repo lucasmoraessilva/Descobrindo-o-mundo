@@ -12,7 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".teste"></activity>
+        <activity android:name=".SelecaoJogo">
+
+        </activity>
+        <activity android:name=".AlterarInformacoes">
+
+        </activity>
         <activity android:name=".JogoNivel01" />
         <activity android:name=".JogoNivel02" />
         <activity android:name=".RecuperarSenha" />
@@ -24,7 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".Login" />
         <activity
             android:name=".JogoNivel03"
             android:screenOrientation="portrait" />

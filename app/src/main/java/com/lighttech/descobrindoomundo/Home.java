@@ -6,94 +6,136 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.ListView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Period;
-import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
-import java.util.Date;
+import com.lighttech.descobrindoomundo.Models.Partida;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Home extends AppCompatActivity {
 
-
     @Override
     public void onBackPressed() {
+        DialogEncerrar("Atenção", "Deseja encerrar o aplicativo?");
+    }
 
+    @Override
+    public boolean onKeyUp(int KeyCode, KeyEvent event){
+
+        if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+            final EditText et_home_pesquisar_partida = findViewById(R.id.et_home_pesquisar_partida);
+
+            String et_home_pesquisar_partida_text = et_home_pesquisar_partida.getText().toString();
+
+            if (!et_home_pesquisar_partida_text.isEmpty()){
+                Partida partidaPesquisar = new Partida();
+                Call<ArrayList<Partida>> partidaCall = partidaPesquisar.Pesquisar(et_home_pesquisar_partida_text);
+
+                partidaCall.enqueue(new Callback<ArrayList<Partida>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<Partida>> call, Response<ArrayList<Partida>> response) {
+                        if(response.code() == 200 && !response.body().isEmpty()){
+
+                            ArrayList<String> partidasBuscadas = new ArrayList<>();
+
+                            for (Partida partida : response.body()){
+                                partidasBuscadas.add(partida.listarDadosResposta());
+                            }
+
+                            ListView lv_home_partidas = findViewById(R.id.lv_home_partidas);
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, partidasBuscadas);
+                            lv_home_partidas.setAdapter(adapter);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<Partida>> call, Throwable t) {
+                        Dialog("Atenção", "Não foi possível fazer a pesquisa, vefifique seu status de internet");
+                    }
+                });
+            }
+
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Button btn_home_jogar = findViewById(R.id.btn_home_jogar);
 
 
+
+        EditText et_home_pesquisar_partida = findViewById(R.id.et_home_pesquisar_partida);
+        Button btn_home_selecao = findViewById(R.id.btn_home_selecao);
+        Button btn_home_alteracoes = findViewById(R.id.btn_home_alteracoes);
+        ListView lv_home_partidas = findViewById(R.id.lv_home_partidas);
 
         //Intent intent = getIntent();
-        final int id = 2; //intent.getStringExtra("nome");
-        final String email = "teste@teste.com"; //intent.getStringExtra("email");
-        TextView tvTexto = findViewById(R.id.tvTexto);
-        tvTexto.setText(String.valueOf(id) + " " + email);
-        
-        btn_home_jogar.setOnClickListener(new View.OnClickListener() {
+        final int id = 1; //intent.getStringExtra("nome");
+        final String email = "lucas@teste.com"; //intent.getStringExtra("email");
+        final String nome = "Lucas";
+        final String sobrenome = "Moraes";
+        final String senha = "SenhaMaisForte@1234";
+        final String dtNascimento = "19/08/2001";
+        final int tipo = 1;
+        final String nickname = "LM_SpaceCake";
+
+        //TextView tvTexto = findViewById(R.id.tvTexto);
+        //tvTexto.setText(String.valueOf(id) + " " + email);
+
+        btn_home_selecao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NivelDialog("Escolha um nível",id,email);
+                Intent selecaoIntent = new Intent(getApplicationContext(), SelecaoJogo.class);
+                selecaoIntent.putExtra("id", String.valueOf(id));
+                selecaoIntent.putExtra("email", email);
+                selecaoIntent.putExtra("nome", nome);
+                selecaoIntent.putExtra("sobrenome", sobrenome);
+                selecaoIntent.putExtra("senha", senha);
+                selecaoIntent.putExtra("dtNascimento", dtNascimento);
+                selecaoIntent.putExtra("tipo", String.valueOf(tipo));
+                selecaoIntent.putExtra("nickname", nickname);
+                startActivity(selecaoIntent);
+            }
+        });
+
+        btn_home_alteracoes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent alteracoesIntent = new Intent(getApplicationContext(), AlterarInformacoes.class);
+                alteracoesIntent.putExtra("id", String.valueOf(id));
+                alteracoesIntent.putExtra("email", email);
+                alteracoesIntent.putExtra("nome", nome);
+                alteracoesIntent.putExtra("sobrenome", sobrenome);
+                alteracoesIntent.putExtra("senha", senha);
+                alteracoesIntent.putExtra("dtNascimento", dtNascimento);
+                alteracoesIntent.putExtra("tipo", String.valueOf(tipo));
+                alteracoesIntent.putExtra("nickname", nickname);
+                startActivity(alteracoesIntent);
             }
         });
     }
 
-    private void NivelDialog(String titulo, int id, String email){
+    private void Dialog(String titulo, String mensagem){
         try {
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT
-            );
-
-            LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            );
-
-            LinearLayout linearLayout = new LinearLayout(this);
-            linearLayout.setLayoutParams(layoutParams);
-            linearLayout.setOrientation(LinearLayout.VERTICAL);
-            linearLayout.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
-
-            Button btn_nivel_01 = new Button(this);
-            btn_nivel_01.setText("01");
-            btn_nivel_01.setLayoutParams(layoutParams2);
-            btn_nivel_01.setOnClickListener(new MyOnClickListenerNivel01(id,email));
-
-            Button btn_nivel_02 = new Button(this);
-            btn_nivel_02.setText("02");
-            btn_nivel_02.setLayoutParams(layoutParams2);
-            btn_nivel_02.setOnClickListener(new MyOnClickListenerNivel02(id,email));
-
-            Button btn_nivel_03 = new Button(this);
-            btn_nivel_03.setText("03");
-            btn_nivel_03.setLayoutParams(layoutParams2);
-            btn_nivel_03.setOnClickListener(new MyOnClickListenerNivel03(id,email));
-
-            linearLayout.addView(btn_nivel_01);
-            linearLayout.addView(btn_nivel_02);
-            linearLayout.addView(btn_nivel_03);
-
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setTitle(titulo)
                     .setCancelable(false)
-                    .setView(linearLayout)
-                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    .setMessage(mensagem)
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -105,60 +147,28 @@ public class Home extends AppCompatActivity {
         }
     }
 
-    class MyOnClickListenerNivel01 implements View.OnClickListener{
+    private void DialogEncerrar(String titulo, String mensagem){
+        try {
+            AlertDialog dialog = new AlertDialog.Builder(this)
+                    .setTitle(titulo)
+                    .setCancelable(false)
+                    .setMessage(mensagem)
+                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-        private int id;
-        private String email;
-
-        public MyOnClickListenerNivel01(int id, String email) {
-            this.id = id;
-            this.email = email;
-        }
-
-        @Override
-        public void onClick(View view) {
-            Intent ActivityJogoNivel01 = new Intent(getApplicationContext(),JogoNivel01.class);
-            ActivityJogoNivel01.putExtra("id", String.valueOf(id));
-            ActivityJogoNivel01.putExtra("email",email);
-            startActivity(ActivityJogoNivel01);
-        }
-    }
-
-    class MyOnClickListenerNivel02 implements View.OnClickListener{
-
-        private int id;
-        private String email;
-
-        public MyOnClickListenerNivel02(int id, String email) {
-            this.id = id;
-            this.email = email;
-        }
-
-        @Override
-        public void onClick(View view) {
-            Intent ActivityJogoNivel02 = new Intent(getApplicationContext(),JogoNivel02.class);
-            ActivityJogoNivel02.putExtra("id", String.valueOf(id));
-            ActivityJogoNivel02.putExtra("email",email);
-            startActivity(ActivityJogoNivel02);
-        }
-    }
-
-    class MyOnClickListenerNivel03 implements View.OnClickListener{
-
-        private int id;
-        private String email;
-
-        public MyOnClickListenerNivel03(int id, String email) {
-            this.id = id;
-            this.email = email;
-        }
-
-        @Override
-        public void onClick(View view) {
-            Intent ActivityJogoNivel03 = new Intent(getApplicationContext(),JogoNivel03.class);
-            ActivityJogoNivel03.putExtra("id", String.valueOf(id));
-            ActivityJogoNivel03.putExtra("email",email);
-            startActivity(ActivityJogoNivel03);
+                        }
+                    })
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                            System.exit(0);
+                        }
+                    }).create();
+            dialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

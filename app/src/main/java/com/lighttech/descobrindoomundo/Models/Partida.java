@@ -12,15 +12,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Partida {
-    private int IdPartida;
-    private int IdJogo;
-    private int IdPaciente;
-    private int IdPalavra;
-    private String Data;
-    private String Duracao;
-    private String Status;
-    private int QtdErros;
-    private int QtdAcertos;
+    private int idPartida;
+    private int idJogo;
+    private int idPaciente;
+    private int idPalavra;
+    private String data;
+    private String duracao;
+    private String status;
+    private int qtdErros;
+    private int qtdAcertos;
 
     public Partida(){}
 
@@ -48,86 +48,75 @@ public class Partida {
     }
 
     public int getIdPartida() {
-        return IdPartida;
+        return idPartida;
     }
 
     public void setIdPartida(int idPartida) {
-        IdPartida = idPartida;
+        idPartida = idPartida;
     }
 
     public int getIdJogo() {
-        return IdJogo;
+        return idJogo;
     }
 
     public void setIdJogo(int idJogo) {
-        IdJogo = idJogo;
+        idJogo = idJogo;
     }
 
     public int getIdPaciente() {
-        return IdPaciente;
+        return idPaciente;
     }
 
     public void setIdPaciente(int idPaciente) {
-        IdPaciente = idPaciente;
+        idPaciente = idPaciente;
     }
 
     public int getIdPalavra() {
-        return IdPalavra;
+        return idPalavra;
     }
 
     public void setIdPalavra(int idPalavra) {
-        IdPalavra = idPalavra;
+        idPalavra = idPalavra;
     }
 
     public String getData() {
-        return Data;
+        return data;
     }
 
     public void setData(String data) {
-        /*DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        Data = LocalDate.parse(data, formatoData);*/
-        Data = data;
+        data = data;
     }
 
     public String getDuracao() {
-        return Duracao;
+        return duracao;
     }
 
     public void setDuracao(String duracao) {
-        /*DateTimeFormatter formatoDuracao = DateTimeFormatter.ofPattern("HH:mm:ss");
-        Duracao = LocalTime.parse(duracao,formatoDuracao);*/
-        Duracao = duracao;
+        duracao = duracao;
     }
 
     public String getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(String status) {
-        Status = status;
+        status = status;
     }
 
     public int getQtdErros() {
-        return QtdErros;
+        return qtdErros;
     }
 
     public void setQtdErros(int qtdErros) {
-        QtdErros = qtdErros;
+        qtdErros = qtdErros;
     }
 
     public int getQtdAcertos() {
-        return QtdAcertos;
+        return qtdAcertos;
     }
 
     public void setQtdAcertos(int qtdAcertos) {
-        QtdAcertos = qtdAcertos;
-    }
-
-    public ArrayList<Partida> Pesquisar (String nickname){
-        /*
-         * Pesquisar partida na API usando nickname
-         */
-        return new ArrayList<Partida>();
+        qtdAcertos = qtdAcertos;
     }
 
     public Call<Partida> Cadastrar(Partida partida)
@@ -143,18 +132,39 @@ public class Partida {
         return requestPartida;
     }
 
+    public Call<ArrayList<Partida>> Pesquisar(String nickname){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(PartidaHttpService.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        PartidaHttpService service = retrofit.create(PartidaHttpService.class);
+        final Call<ArrayList<Partida>> requestPartida = service.Pesquisar(nickname);
+
+        return requestPartida;
+    }
+
+    public String listarDadosResposta(){
+        return "Data: " + getData() +
+                "\nDuracao: " + getDuracao() +
+                "\nStatus: '" + status + '\'' +
+                "\nQuantidade de erros: " + qtdErros +
+                "\nQuantidade de acertos: " + qtdAcertos
+                ;
+    }
+
     @Override
     public String toString() {
         return "Partida{" +
-                "IdPartida=" + IdPartida +
-                ", IdJogo=" + IdJogo +
-                ", IdPaciente=" + IdPaciente +
-                ", IdPalavra=" + IdPalavra +
+                "IdPartida=" + idPartida +
+                ", IdJogo=" + idJogo +
+                ", IdPaciente=" + idPaciente +
+                ", IdPalavra=" + idPalavra +
                 ", Data=" + getData() +
                 ", Duracao=" + getDuracao() +
-                ", Status='" + Status + '\'' +
-                ", QtdErros=" + QtdErros +
-                ", QtdAcertos=" + QtdAcertos +
+                ", Status='" + status + '\'' +
+                ", QtdErros=" + qtdErros +
+                ", QtdAcertos=" + qtdAcertos +
                 '}';
     }
 

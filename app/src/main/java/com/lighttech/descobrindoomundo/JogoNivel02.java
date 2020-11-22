@@ -94,7 +94,7 @@ public class JogoNivel02 extends AppCompatActivity {
 
                     btn_jogo_nivel_02_verificar.setOnClickListener(new MyOnClickListenerBtnVerificar(id, email, response.body().getId(), tentativas, horaInicial));
 
-                    iv_jogo_nivel_02.setImageResource(response.body().getComponente().getLocalizacao());
+                    AdicionarImagem(response.body().getNome());
                     tv_jogo_nivel_02_slb_01.setText(silabasCorretas[0]);
                     tv_jogo_nivel_02_slb_02.setText(silabasIncorretas[0]);
                     tv_jogo_nivel_02_slb_03.setText(silabasCorretas[1]);
@@ -453,6 +453,21 @@ public class JogoNivel02 extends AppCompatActivity {
             dialog.show();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void AdicionarImagem(String nomePalavra){
+        ImageView iv_jogo_nivel_02 = findViewById(R.id.iv_jogo_nivel_02);
+        switch (nomePalavra){
+            case "BANANA":
+                iv_jogo_nivel_02.setImageResource(R.drawable.banana);
+                break;
+            case "LARANJA":
+                iv_jogo_nivel_02.setImageResource(R.drawable.laranja);
+                break;
+            case "MORANGO":
+                iv_jogo_nivel_02.setImageResource(R.drawable.morango);
+                break;
         }
     }
 

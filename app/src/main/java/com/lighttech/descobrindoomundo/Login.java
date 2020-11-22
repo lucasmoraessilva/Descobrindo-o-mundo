@@ -17,7 +17,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity {
+public class Login extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else{
                             Intent intent = new Intent(getApplicationContext(),Home.class);
-                            intent.putExtra("id", response.body().getIdUsuario());
+                            intent.putExtra("id", response.body().getId());
                             intent.putExtra("email", response.body().getEmail());
                             startActivity(intent);
                         }
