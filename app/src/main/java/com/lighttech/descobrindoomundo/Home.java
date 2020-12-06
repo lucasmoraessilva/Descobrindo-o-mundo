@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -76,25 +77,21 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
-
         EditText et_home_pesquisar_partida = findViewById(R.id.et_home_pesquisar_partida);
         Button btn_home_selecao = findViewById(R.id.btn_home_selecao);
         Button btn_home_alteracoes = findViewById(R.id.btn_home_alteracoes);
         ListView lv_home_partidas = findViewById(R.id.lv_home_partidas);
 
-        //Intent intent = getIntent();
-        final int id = 1; //intent.getStringExtra("nome");
-        final String email = "lucas@teste.com"; //intent.getStringExtra("email");
-        final String nome = "Lucas";
-        final String sobrenome = "Moraes";
-        final String senha = "SenhaMaisForte@1234";
-        final String dtNascimento = "19/08/2001";
-        final int tipo = 1;
-        final String nickname = "LM_SpaceCake";
-
-        //TextView tvTexto = findViewById(R.id.tvTexto);
-        //tvTexto.setText(String.valueOf(id) + " " + email);
+        Intent intent = getIntent();
+        final int id = Integer.parseInt(intent.getStringExtra("id"));
+        final String nome = intent.getStringExtra("nome");
+        final String sobrenome = intent.getStringExtra("sobrenome");
+        final String email = intent.getStringExtra("email");
+        final String senha = intent.getStringExtra("senha");
+        final String dtNascimento = intent.getStringExtra("dtNascimento");
+        final int tipo = Integer.parseInt(intent.getStringExtra("tipo"));
+        final int idPaciente = Integer.parseInt(intent.getStringExtra("idPaciente"));
+        final String nickname = intent.getStringExtra("nickname");
 
         btn_home_selecao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +104,7 @@ public class Home extends AppCompatActivity {
                 selecaoIntent.putExtra("senha", senha);
                 selecaoIntent.putExtra("dtNascimento", dtNascimento);
                 selecaoIntent.putExtra("tipo", String.valueOf(tipo));
+                selecaoIntent.putExtra("idPaciente", String.valueOf(idPaciente));
                 selecaoIntent.putExtra("nickname", nickname);
                 startActivity(selecaoIntent);
             }
@@ -123,6 +121,7 @@ public class Home extends AppCompatActivity {
                 alteracoesIntent.putExtra("senha", senha);
                 alteracoesIntent.putExtra("dtNascimento", dtNascimento);
                 alteracoesIntent.putExtra("tipo", String.valueOf(tipo));
+                alteracoesIntent.putExtra("idPaciente", String.valueOf(idPaciente));
                 alteracoesIntent.putExtra("nickname", nickname);
                 startActivity(alteracoesIntent);
             }

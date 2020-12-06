@@ -9,15 +9,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Usuario {
 
-    private int Id;
-    private String Nome;
-    private String Sobrenome;
-    private String Email;
-    private String Senha;
-    private String DtNascimento;
-    private int Tipo;
-    private Paciente Paciente = new Paciente();
-    private Profissional Profissional = new Profissional();
+    private int id;
+    private String nome;
+    private String sobrenome;
+    private String email;
+    private String senha;
+    private String dtNascimento;
+    private int tipo;
+    private Paciente paciente = new Paciente();
+    private Profissional profissional = new Profissional();
 
     public Usuario(){
 
@@ -30,7 +30,7 @@ public class Usuario {
         this.setSenha(senha);
         this.setDtNascimento(dataNascimento);
         this.setTipo(tipo);
-        this.Paciente.setNickname(nickname);
+        this.paciente.setNickname(nickname);
     }
 
     public Usuario(String nome, String sobrenome, String email, String senha, String dataNascimento, int tipo, int crm) {
@@ -40,7 +40,7 @@ public class Usuario {
         this.setSenha(senha);
         this.setDtNascimento(dataNascimento);
         this.setTipo(tipo);
-        this.Profissional.setCrm(String.valueOf(crm));
+        this.profissional.setCrm(String.valueOf(crm));
     }
 
     public Usuario(int id, String nome, String sobrenome, String email, String senha, String dataNascimento, int tipo, String nickname) {
@@ -51,7 +51,19 @@ public class Usuario {
         this.setSenha(senha);
         this.setDtNascimento(dataNascimento);
         this.setTipo(tipo);
-        this.Paciente.setNickname(nickname);
+        this.paciente.setNickname(nickname);
+    }
+
+    public Usuario(int id, String nome, String sobrenome, String email, String senha, String dataNascimento, int tipo, int idUsuario, String nickname) {
+        this.setId(id);
+        this.setNome(nome);
+        this.setSobrenome(sobrenome);
+        this.setEmail(email);
+        this.setSenha(senha);
+        this.setDtNascimento(dataNascimento);
+        this.setTipo(tipo);
+        this.paciente.setId(idUsuario);
+        this.paciente.setNickname(nickname);
     }
 
     public Usuario(int id, String nome, String sobrenome, String email, String senha, String dataNascimento, int tipo, int crm) {
@@ -62,7 +74,7 @@ public class Usuario {
         this.setSenha(senha);
         this.setDtNascimento(dataNascimento);
         this.setTipo(tipo);
-        this.Profissional.setCrm(String.valueOf(crm));
+        this.profissional.setCrm(String.valueOf(crm));
     }
 
     public Usuario(String email, String senha)
@@ -72,75 +84,75 @@ public class Usuario {
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getNome() {
-        return Nome;
+        return nome;
     }
 
     public void setNome(String nome) {
-        Nome = nome;
+        this.nome = nome;
     }
 
     public String getSobrenome() {
-        return Sobrenome;
+        return sobrenome;
     }
 
     public void setSobrenome(String sobrenome) {
-        Sobrenome = sobrenome;
+        this.sobrenome = sobrenome;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public String getSenha() {
-        return Senha;
+        return senha;
     }
 
     public void setSenha(String senha) {
-        Senha = senha;
+        this.senha = senha;
     }
 
     public String getDtNascimento() {
-        return DtNascimento;
+        return dtNascimento;
     }
 
     public void setDtNascimento(String dtNascimento) {
-        DtNascimento = dtNascimento;
+        this.dtNascimento = dtNascimento;
     }
 
     public int getTipo() {
-        return Tipo;
+        return tipo;
     }
 
     public void setTipo(int tipo) {
-        Tipo = tipo;
+        this.tipo = tipo;
     }
 
     public com.lighttech.descobrindoomundo.Models.Paciente getPaciente() {
-        return Paciente;
+        return paciente;
     }
 
     public void setPaciente(com.lighttech.descobrindoomundo.Models.Paciente paciente) {
-        Paciente = paciente;
+        this.paciente = paciente;
     }
 
     public com.lighttech.descobrindoomundo.Models.Profissional getProfissional() {
-        return Profissional;
+        return profissional;
     }
 
     public void setProfissional(com.lighttech.descobrindoomundo.Models.Profissional profissional) {
-        Profissional = profissional;
+        this.profissional = profissional;
     }
 
     public Call<Usuario> Login(String email, String senha){
@@ -192,15 +204,15 @@ public class Usuario {
     @Override
     public String toString() {
         return "Usuario{" +
-                "id=" + Id +
-                ", nome='" + Nome + '\'' +
-                ", sobrenome='" + Sobrenome + '\'' +
-                ", email='" + Email + '\'' +
-                ", senha='" + Senha + '\'' +
-                ", DtNascimento='" + DtNascimento + '\'' +
-                ", tipo=" + Tipo +
-                ", paciente=" + Paciente.toString() +
-                ", profissional=" + Profissional.toString() +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", sobrenome='" + sobrenome + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                ", DtNascimento='" + dtNascimento + '\'' +
+                ", tipo=" + tipo +
+                ", paciente=" + paciente.toString() +
+                ", profissional=" + profissional.toString() +
                 '}';
     }
 }

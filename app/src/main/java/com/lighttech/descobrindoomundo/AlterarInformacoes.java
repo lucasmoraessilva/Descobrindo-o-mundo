@@ -34,6 +34,7 @@ public class AlterarInformacoes extends AppCompatActivity {
         final String senha = intent.getStringExtra("senha");
         final String dtNascimento = intent.getStringExtra("dtNascimento");
         final int tipo = Integer.parseInt(intent.getStringExtra("tipo"));
+        final int idPaciente = Integer.parseInt(intent.getStringExtra("idPaciente"));
         final String nickname = intent.getStringExtra("nickname");
 
         Button btn_alterar_informacoes_pesquisa = findViewById(R.id.btn_alterar_informacoes_pesquisa);
@@ -53,7 +54,7 @@ public class AlterarInformacoes extends AppCompatActivity {
         final EditText et_alterar_informacoes_dt_nascimento = findViewById(R.id.et_alterar_informacoes_dt_nascimento);
         final EditText et_alterar_informacoes_senha = findViewById(R.id.et_alterar_informacoes_senha);
 
-        final Usuario usuarioPaciente = new Usuario(id,nome,sobrenome, email, senha,dtNascimento,tipo,nickname);
+        final Usuario usuarioPaciente = new Usuario(id,nome,sobrenome, email, senha,dtNascimento,tipo,idPaciente,nickname);
         final Usuario usuarioPacienteAtualizado = new Usuario(
                 usuarioPaciente.getId(),
                 usuarioPaciente.getNome(),
@@ -62,6 +63,7 @@ public class AlterarInformacoes extends AppCompatActivity {
                 usuarioPaciente.getSenha(),
                 usuarioPaciente.getDtNascimento(),
                 usuarioPaciente.getTipo(),
+                usuarioPaciente.getPaciente().getId(),
                 usuarioPaciente.getPaciente().getNickname()
         );
 
@@ -153,8 +155,15 @@ public class AlterarInformacoes extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent selecaoIntent = new Intent(getApplicationContext(), SelecaoJogo.class);
-                selecaoIntent.putExtra("id", String.valueOf(id));
-                selecaoIntent.putExtra("email", email);
+                selecaoIntent.putExtra("id", String.valueOf(usuarioPaciente.getId()));
+                selecaoIntent.putExtra("email", usuarioPaciente.getEmail());
+                selecaoIntent.putExtra("nome", usuarioPaciente.getNome());
+                selecaoIntent.putExtra("sobrenome", usuarioPaciente.getSobrenome());
+                selecaoIntent.putExtra("senha", usuarioPaciente.getSenha());
+                selecaoIntent.putExtra("dtNascimento", usuarioPaciente.getDtNascimento());
+                selecaoIntent.putExtra("tipo", String.valueOf(usuarioPaciente.getTipo()));
+                selecaoIntent.putExtra("idPaciente", String.valueOf(usuarioPaciente.getPaciente().getId()));
+                selecaoIntent.putExtra("nickname", usuarioPaciente.getPaciente().getNickname());
                 startActivity(selecaoIntent);
             }
         });
@@ -163,8 +172,15 @@ public class AlterarInformacoes extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent pesquisaIntent = new Intent(getApplicationContext(), Home.class);
-                pesquisaIntent.putExtra("id", String.valueOf(id));
-                pesquisaIntent.putExtra("email", email);
+                pesquisaIntent.putExtra("id", String.valueOf(usuarioPaciente.getId()));
+                pesquisaIntent.putExtra("email", usuarioPaciente.getEmail());
+                pesquisaIntent.putExtra("nome", usuarioPaciente.getNome());
+                pesquisaIntent.putExtra("sobrenome", usuarioPaciente.getSobrenome());
+                pesquisaIntent.putExtra("senha", usuarioPaciente.getSenha());
+                pesquisaIntent.putExtra("dtNascimento", usuarioPaciente.getDtNascimento());
+                pesquisaIntent.putExtra("tipo", String.valueOf(usuarioPaciente.getTipo()));
+                pesquisaIntent.putExtra("idPaciente", String.valueOf(usuarioPaciente.getPaciente().getId()));
+                pesquisaIntent.putExtra("nickname", usuarioPaciente.getPaciente().getNickname());
                 startActivity(pesquisaIntent);
             }
         });
@@ -246,8 +262,6 @@ public class AlterarInformacoes extends AppCompatActivity {
                             else {
                                 RespostaDialog("Atenção", "Não foi possível enviar os dados de atualização.\n\nVerifique se as informações foram preenchidas de forma correta", usuarioPaciente);
                             }
-                            Log.i("Resposta", response.toString());
-                            Log.i("Corpo", response.body().toString());
                         }
 
                         @Override
@@ -295,6 +309,7 @@ public class AlterarInformacoes extends AppCompatActivity {
                             intent.putExtra("senha", usuario.getSenha());
                             intent.putExtra("dtNascimento", usuario.getDtNascimento());
                             intent.putExtra("tipo", String.valueOf(usuario.getTipo()));
+                            intent.putExtra("idPaciente", String.valueOf(usuario.getPaciente().getId()));
                             intent.putExtra("nickname", usuario.getPaciente().getNickname());
                             startActivity(intent);
                         }

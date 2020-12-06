@@ -11,7 +11,9 @@ import retrofit2.http.Query;
 
 public interface UsuarioHttpService {
 
-    public static final String BASE_URL = "http://192.168.0.73/descobrindomundo/api/";
+    //public static final String BASE_URL = "http://192.168.0.73/descobrindomundo/api/";
+    public static final String BASE_URL = "http://app-descobrindo-o-mundo.azurewebsites.net/api/";
+
 
     @GET("Usuario/Login")
     Call<Usuario> Login(@Query("email") String email, @Query("senha") String senha);

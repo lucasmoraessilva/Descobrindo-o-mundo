@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.lighttech.descobrindoomundo.Models.Usuario;
+
 public class SelecaoJogo extends AppCompatActivity {
 
     @Override
@@ -27,7 +29,10 @@ public class SelecaoJogo extends AppCompatActivity {
         final String senha = intent.getStringExtra("senha");
         final String dtNascimento = intent.getStringExtra("dtNascimento");
         final int tipo = Integer.parseInt(intent.getStringExtra("tipo"));
+        final int idPaciente = Integer.parseInt(intent.getStringExtra("idPaciente"));
         final String nickname = intent.getStringExtra("nickname");
+
+        final Usuario usuario = new Usuario(id,nome,sobrenome,email,senha,dtNascimento,tipo,idPaciente,nickname);
 
         Button btn_selecao_jogo_jogar = findViewById(R.id.btn_selecao_jogo_jogar);
         Button btn_selecao_jogo_selecao = findViewById(R.id.btn_selecao_jogo_selecao);
@@ -37,7 +42,7 @@ public class SelecaoJogo extends AppCompatActivity {
         btn_selecao_jogo_jogar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NivelDialog("Escolha um nível",id,email);
+                NivelDialog("Escolha um nível",usuario);
             }
         });
 
@@ -45,14 +50,15 @@ public class SelecaoJogo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent alteracoesIntent = new Intent(getApplicationContext(), AlterarInformacoes.class);
-                alteracoesIntent.putExtra("id", String.valueOf(id));
-                alteracoesIntent.putExtra("email", email);
-                alteracoesIntent.putExtra("nome", nome);
-                alteracoesIntent.putExtra("sobrenome", sobrenome);
-                alteracoesIntent.putExtra("senha", senha);
-                alteracoesIntent.putExtra("dtNascimento", dtNascimento);
-                alteracoesIntent.putExtra("tipo", String.valueOf(tipo));
-                alteracoesIntent.putExtra("nickname", nickname);
+                alteracoesIntent.putExtra("id", String.valueOf(usuario.getId()));
+                alteracoesIntent.putExtra("email", usuario.getEmail());
+                alteracoesIntent.putExtra("nome", usuario.getNome());
+                alteracoesIntent.putExtra("sobrenome", usuario.getSobrenome());
+                alteracoesIntent.putExtra("senha", usuario.getSenha());
+                alteracoesIntent.putExtra("dtNascimento", usuario.getDtNascimento());
+                alteracoesIntent.putExtra("tipo", String.valueOf(usuario.getTipo()));
+                alteracoesIntent.putExtra("idPaciente", String.valueOf(usuario.getPaciente().getId()));
+                alteracoesIntent.putExtra("nickname", usuario.getPaciente().getNickname());
                 startActivity(alteracoesIntent);
             }
         });
@@ -61,14 +67,21 @@ public class SelecaoJogo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent pesquisaIntent = new Intent(getApplicationContext(), Home.class);
-                pesquisaIntent.putExtra("id", String.valueOf(id));
-                pesquisaIntent.putExtra("email", email);
+                pesquisaIntent.putExtra("id", String.valueOf(usuario.getId()));
+                pesquisaIntent.putExtra("email", usuario.getEmail());
+                pesquisaIntent.putExtra("nome", usuario.getNome());
+                pesquisaIntent.putExtra("sobrenome", usuario.getSobrenome());
+                pesquisaIntent.putExtra("senha", usuario.getSenha());
+                pesquisaIntent.putExtra("dtNascimento", usuario.getDtNascimento());
+                pesquisaIntent.putExtra("tipo", String.valueOf(usuario.getTipo()));
+                pesquisaIntent.putExtra("idPaciente", String.valueOf(usuario.getPaciente().getId()));
+                pesquisaIntent.putExtra("nickname", usuario.getPaciente().getNickname());
                 startActivity(pesquisaIntent);
             }
         });
     }
 
-    private void NivelDialog(String titulo, int id, String email){
+    private void NivelDialog(String titulo, Usuario usuario){
         try {
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -88,17 +101,17 @@ public class SelecaoJogo extends AppCompatActivity {
             Button btn_nivel_01 = new Button(this);
             btn_nivel_01.setText("01");
             btn_nivel_01.setLayoutParams(layoutParams2);
-            btn_nivel_01.setOnClickListener(new MyOnClickListenerNivel01(id,email));
+            btn_nivel_01.setOnClickListener(new MyOnClickListenerNivel01(usuario));
 
             Button btn_nivel_02 = new Button(this);
             btn_nivel_02.setText("02");
             btn_nivel_02.setLayoutParams(layoutParams2);
-            btn_nivel_02.setOnClickListener(new MyOnClickListenerNivel02(id,email));
+            btn_nivel_02.setOnClickListener(new MyOnClickListenerNivel02(usuario));
 
             Button btn_nivel_03 = new Button(this);
             btn_nivel_03.setText("03");
             btn_nivel_03.setLayoutParams(layoutParams2);
-            btn_nivel_03.setOnClickListener(new MyOnClickListenerNivel03(id,email));
+            btn_nivel_03.setOnClickListener(new MyOnClickListenerNivel03(usuario));
 
             linearLayout.addView(btn_nivel_01);
             linearLayout.addView(btn_nivel_02);
@@ -122,57 +135,73 @@ public class SelecaoJogo extends AppCompatActivity {
 
     class MyOnClickListenerNivel01 implements View.OnClickListener{
 
-        private int id;
-        private String email;
+        private Usuario usuario;
 
-        public MyOnClickListenerNivel01(int id, String email) {
-            this.id = id;
-            this.email = email;
+        public MyOnClickListenerNivel01(Usuario usuario) {
+            this.usuario = usuario;
         }
 
         @Override
         public void onClick(View view) {
             Intent ActivityJogoNivel01 = new Intent(getApplicationContext(),JogoNivel01.class);
-            ActivityJogoNivel01.putExtra("id", String.valueOf(id));
-            ActivityJogoNivel01.putExtra("email",email);
+            ActivityJogoNivel01.putExtra("id", String.valueOf(usuario.getId()));
+            ActivityJogoNivel01.putExtra("email",usuario.getEmail());
+            ActivityJogoNivel01.putExtra("nome", usuario.getNome());
+            ActivityJogoNivel01.putExtra("sobrenome", usuario.getSobrenome());
+            ActivityJogoNivel01.putExtra("senha", usuario.getSenha());
+            ActivityJogoNivel01.putExtra("dtNascimento", usuario.getDtNascimento());
+            ActivityJogoNivel01.putExtra("tipo", String.valueOf(usuario.getTipo()));
+            ActivityJogoNivel01.putExtra("idPaciente", String.valueOf(usuario.getPaciente().getId()));
+            ActivityJogoNivel01.putExtra("nickname", usuario.getPaciente().getNickname());
             startActivity(ActivityJogoNivel01);
         }
     }
 
     class MyOnClickListenerNivel02 implements View.OnClickListener{
 
-        private int id;
-        private String email;
+        private Usuario usuario;
 
-        public MyOnClickListenerNivel02(int id, String email) {
-            this.id = id;
-            this.email = email;
+        public MyOnClickListenerNivel02(Usuario usuario) {
+            this.usuario = usuario;
         }
 
         @Override
         public void onClick(View view) {
             Intent ActivityJogoNivel02 = new Intent(getApplicationContext(),JogoNivel02.class);
-            ActivityJogoNivel02.putExtra("id", String.valueOf(id));
-            ActivityJogoNivel02.putExtra("email",email);
+            ActivityJogoNivel02.putExtra("id", String.valueOf(usuario.getId()));
+            ActivityJogoNivel02.putExtra("email",usuario.getEmail());
+            ActivityJogoNivel02.putExtra("nome", usuario.getNome());
+            ActivityJogoNivel02.putExtra("sobrenome", usuario.getSobrenome());
+            ActivityJogoNivel02.putExtra("senha", usuario.getSenha());
+            ActivityJogoNivel02.putExtra("dtNascimento", usuario.getDtNascimento());
+            ActivityJogoNivel02.putExtra("tipo", String.valueOf(usuario.getTipo()));
+            ActivityJogoNivel02.putExtra("idPaciente", String.valueOf(usuario.getPaciente().getId()));
+            ActivityJogoNivel02.putExtra("nickname", usuario.getPaciente().getNickname());
             startActivity(ActivityJogoNivel02);
         }
     }
 
     class MyOnClickListenerNivel03 implements View.OnClickListener{
 
-        private int id;
-        private String email;
+        private Usuario usuario;
 
-        public MyOnClickListenerNivel03(int id, String email) {
-            this.id = id;
-            this.email = email;
+        public MyOnClickListenerNivel03(Usuario usuario) {
+            this.usuario = usuario;
         }
 
         @Override
         public void onClick(View view) {
             Intent ActivityJogoNivel03 = new Intent(getApplicationContext(),JogoNivel03.class);
-            ActivityJogoNivel03.putExtra("id", String.valueOf(id));
-            ActivityJogoNivel03.putExtra("email",email);
+            ActivityJogoNivel03.putExtra("id", String.valueOf(usuario.getId()));
+            ActivityJogoNivel03.putExtra("email",usuario.getEmail());
+            ActivityJogoNivel03.putExtra("nome", usuario.getNome());
+            ActivityJogoNivel03.putExtra("sobrenome", usuario.getSobrenome());
+            ActivityJogoNivel03.putExtra("senha", usuario.getSenha());
+            ActivityJogoNivel03.putExtra("dtNascimento", usuario.getDtNascimento());
+            ActivityJogoNivel03.putExtra("tipo", String.valueOf(usuario.getTipo()));
+            ActivityJogoNivel03.putExtra("idPaciente", String.valueOf(usuario.getPaciente().getId()));
+            ActivityJogoNivel03.putExtra("nickname", usuario.getPaciente().getNickname());
+
             startActivity(ActivityJogoNivel03);
         }
     }

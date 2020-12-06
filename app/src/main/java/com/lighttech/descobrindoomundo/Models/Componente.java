@@ -5,7 +5,7 @@ public class Componente {
     public int id;
     public int idPalavra;
     public String nome;
-    public int localizacao;
+    public String localizacao;
     public int tipo;
     public String descricao;
 
@@ -57,12 +57,12 @@ public class Componente {
         this.descricao = descricao;
     }
 
-    public int getLocalizacao() {
+    public String getLocalizacao() {
         return localizacao;
     }
 
     public void setLocalizacao(String localizacao) {
-        this.localizacao = Integer.valueOf(localizacao);
+        this.localizacao = localizacao;
     }
 
 }

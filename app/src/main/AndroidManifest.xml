@@ -23,13 +23,15 @@
         <activity android:name=".RecuperarSenha" />
         <activity android:name=".Cadastre_se" />
         <activity android:name=".Home">
+
+        </activity>
+        <activity android:name=".Login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login" />
         <activity
             android:name=".JogoNivel03"
             android:screenOrientation="portrait" />

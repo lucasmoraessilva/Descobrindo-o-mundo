@@ -7,39 +7,39 @@ import com.lighttech.descobrindoomundo.Enums.TipoUsuario;
 
 public class Paciente {
 
-    private int Id;
-    private int IdUsuario;
-    private String Nickname;
+    private int id;
+    private int idUsuario;
+    private String nickname;
 
     public Paciente(){}
 
     public Paciente(int id, String nickname, String nome, String email, String data, String senha) {
-        this.Id = id;
-        this.Nickname = nickname;
+        this.id = id;
+        this.nickname = nickname;
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        this.Id = id;
+        this.id = id;
     }
 
     public String getNickname() {
-        return Nickname;
+        return nickname;
     }
 
     public void setNickname(String nickname) {
-        this.Nickname = nickname;
+        this.nickname = nickname;
     }
 
     @Override
     public String toString() {
         return "Paciente{" +
-                "Id=" + Id +
-                ", IdUsuario=" + IdUsuario +
-                ", Nickname='" + Nickname + '\'' +
+                "Id=" + id +
+                ", IdUsuario=" + idUsuario +
+                ", Nickname='" + nickname + '\'' +
                 '}';
     }
 }

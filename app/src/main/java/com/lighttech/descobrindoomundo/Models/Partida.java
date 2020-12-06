@@ -52,7 +52,7 @@ public class Partida {
     }
 
     public void setIdPartida(int idPartida) {
-        idPartida = idPartida;
+        this.idPartida = idPartida;
     }
 
     public int getIdJogo() {
@@ -60,7 +60,7 @@ public class Partida {
     }
 
     public void setIdJogo(int idJogo) {
-        idJogo = idJogo;
+        this.idJogo = idJogo;
     }
 
     public int getIdPaciente() {
@@ -68,7 +68,7 @@ public class Partida {
     }
 
     public void setIdPaciente(int idPaciente) {
-        idPaciente = idPaciente;
+        this.idPaciente = idPaciente;
     }
 
     public int getIdPalavra() {
@@ -76,7 +76,7 @@ public class Partida {
     }
 
     public void setIdPalavra(int idPalavra) {
-        idPalavra = idPalavra;
+        this.idPalavra = idPalavra;
     }
 
     public String getData() {
@@ -84,7 +84,7 @@ public class Partida {
     }
 
     public void setData(String data) {
-        data = data;
+        this.data = data;
     }
 
     public String getDuracao() {
@@ -92,7 +92,7 @@ public class Partida {
     }
 
     public void setDuracao(String duracao) {
-        duracao = duracao;
+        this.duracao = duracao;
     }
 
     public String getStatus() {
@@ -100,7 +100,7 @@ public class Partida {
     }
 
     public void setStatus(String status) {
-        status = status;
+        this.status = status;
     }
 
     public int getQtdErros() {
@@ -108,7 +108,7 @@ public class Partida {
     }
 
     public void setQtdErros(int qtdErros) {
-        qtdErros = qtdErros;
+        this.qtdErros = qtdErros;
     }
 
     public int getQtdAcertos() {
@@ -116,7 +116,7 @@ public class Partida {
     }
 
     public void setQtdAcertos(int qtdAcertos) {
-        qtdAcertos = qtdAcertos;
+        this.qtdAcertos = qtdAcertos;
     }
 
     public Call<Partida> Cadastrar(Partida partida)

@@ -35,21 +35,31 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 String email = tvEmail_login.getText().toString();
                 String senha = tvSenha_login.getText().toString();
-                Usuario user = new Usuario();
-                Call<Usuario> usuarioCall = user.Login(email,senha);
+
+                Usuario usario = new Usuario();
+                Call<Usuario> usuarioCall = usario.Login(email,senha);
 
                 usuarioCall.enqueue(new Callback<Usuario>() {
                     private static final String TAG = "sumer";
 
                     @Override
                     public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+
                         if (!response.isSuccessful()){
                             UsuarioDialog("Usuário não encontrado");
                         }
                         else{
                             Intent intent = new Intent(getApplicationContext(),Home.class);
-                            intent.putExtra("id", response.body().getId());
+                            intent.putExtra("id", String.valueOf(response.body().getId()));
+                            intent.putExtra("nome", response.body().getNome());
+                            intent.putExtra("sobrenome", response.body().getSobrenome());
                             intent.putExtra("email", response.body().getEmail());
+                            intent.putExtra("senha", response.body().getSenha());
+                            intent.putExtra("dtNascimento", response.body().getDtNascimento());
+                            intent.putExtra("tipo", String.valueOf(response.body().getTipo()));
+                            intent.putExtra("idPaciente", String.valueOf(response.body().getPaciente().getId()));
+                            intent.putExtra("nickname", response.body().getPaciente().getNickname());
+
                             startActivity(intent);
                         }
                     }

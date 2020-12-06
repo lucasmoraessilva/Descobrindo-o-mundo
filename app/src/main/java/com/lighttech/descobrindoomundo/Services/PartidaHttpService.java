@@ -12,7 +12,8 @@ import retrofit2.http.Path;
 
 public interface PartidaHttpService {
 
-    public static final String BASE_URL = "http://192.168.0.73/descobrindomundo/api/";
+    //public static final String BASE_URL = "http://192.168.0.73/descobrindomundo/api/";
+    public static final String BASE_URL = "http://app-descobrindo-o-mundo.azurewebsites.net/api/";
 
     @POST("Partida")
     Call<Partida> Cadastrar(@Body Partida partida);

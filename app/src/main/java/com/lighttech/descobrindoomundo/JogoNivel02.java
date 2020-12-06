@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.lighttech.descobrindoomundo.Models.Palavra;
 import com.lighttech.descobrindoomundo.Models.Partida;
+import com.lighttech.descobrindoomundo.Models.Usuario;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -44,11 +45,21 @@ public class JogoNivel02 extends AppCompatActivity {
         setContentView(R.layout.activity_jogo_nivel_02);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_FULLSCREEN);
 
-        Intent intent = getIntent();
-        final int id = Integer.parseInt(intent.getStringExtra("id"));
-        final String email = intent.getStringExtra("email");
         final LocalTime horaInicial = LocalTime.now();
         final int tentativas = 0;
+
+        Intent intent = getIntent();
+        final int id = Integer.parseInt(intent.getStringExtra("id"));
+        final String nome = intent.getStringExtra("nome");
+        final String sobrenome = intent.getStringExtra("sobrenome");
+        final String email = intent.getStringExtra("email");
+        final String senha = intent.getStringExtra("senha");
+        final String dtNascimento = intent.getStringExtra("dtNascimento");
+        final int tipo = Integer.parseInt(intent.getStringExtra("tipo"));
+        final int idPaciente = Integer.parseInt(intent.getStringExtra("idPaciente"));
+        final String nickname = intent.getStringExtra("nickname");
+
+        final Usuario usuario = new Usuario(id,nome,sobrenome,email,senha,dtNascimento,tipo,idPaciente,nickname);
 
         final FrameLayout fl_jogo_nivel_02 = findViewById(R.id.fl_jogo_nivel_02);
         final ImageView iv_jogo_nivel_02 = findViewById(R.id.iv_jogo_nivel_02);
@@ -92,7 +103,7 @@ public class JogoNivel02 extends AppCompatActivity {
                     String[] silabasCorretas = response.body().getSilabas().getSilabasCorretas().split(",");
                     String[] silabasIncorretas = response.body().getSilabas().getSilabasIncorretas().split(",");
 
-                    btn_jogo_nivel_02_verificar.setOnClickListener(new MyOnClickListenerBtnVerificar(id, email, response.body().getId(), tentativas, horaInicial));
+                    btn_jogo_nivel_02_verificar.setOnClickListener(new MyOnClickListenerBtnVerificar(usuario, response.body().getId(), tentativas, horaInicial));
 
                     AdicionarImagem(response.body().getNome());
                     tv_jogo_nivel_02_slb_01.setText(silabasCorretas[0]);
@@ -106,7 +117,7 @@ public class JogoNivel02 extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Palavra> call, Throwable t) {
-                FalhaRequisicaoDialog("Atenção","Verifique seu status de internet");
+                FalhaRequisicaoDialog("Atenção","Verifique seu status de internet", usuario);
             }
         });
 
@@ -232,8 +243,7 @@ public class JogoNivel02 extends AppCompatActivity {
 
     class MyOnClickListenerBtnVerificar implements View.OnClickListener {
 
-        private int IdJogador;
-        private String EmailJogador;
+        private Usuario usuario;
         private int IdPalavra;
         private int Tentativas;
         private LocalTime DataInicial;
@@ -245,9 +255,8 @@ public class JogoNivel02 extends AppCompatActivity {
         final TextView tv_jogo_nivel_02_slb_03 = findViewById(R.id.tv_jogo_nivel_02_slb_03);
         final TextView tv_jogo_nivel_02_slb_05 = findViewById(R.id.tv_jogo_nivel_02_slb_05);
 
-        public MyOnClickListenerBtnVerificar(int idJogador, String emailJogador, int idPalavra, int tentativas, LocalTime dataInicial){
-            this.IdJogador = idJogador;
-            this.EmailJogador = emailJogador;
+        public MyOnClickListenerBtnVerificar(final Usuario usuario, int idPalavra, int tentativas, LocalTime dataInicial){
+            this.usuario = usuario;
             this.IdPalavra = idPalavra;
             this.Tentativas = tentativas;
             this.DataInicial = dataInicial;
@@ -255,7 +264,7 @@ public class JogoNivel02 extends AppCompatActivity {
             btn_jogo_nivel_02_desistir.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ConfirmarDesistenciaDialog("Atenção", "Deseja realmente desistir", IdJogador, EmailJogador, IdPalavra, DataInicial, Tentativas);
+                    ConfirmarDesistenciaDialog("Atenção", "Deseja realmente desistir", usuario, IdPalavra, DataInicial, Tentativas);
                 }
             });
         }
@@ -285,19 +294,19 @@ public class JogoNivel02 extends AppCompatActivity {
                     String duracaoFinal = formatoDuracao.format(duracao);
                     String dataFinal = formatoData.format(LocalDate.now());
 
-                    Partida partidaVitoria = new Partida(1,IdJogador,IdPalavra,dataFinal,duracaoFinal,"v", Tentativas,1);
+                    Partida partidaVitoria = new Partida(1,usuario.getPaciente().getId(),IdPalavra,dataFinal,duracaoFinal,"v", Tentativas,1);
                     Log.i("Vitória", partidaVitoria.toString());
                     Call<Partida> partidaCall = partidaVitoria.Cadastrar(partidaVitoria);
 
                     partidaCall.enqueue(new Callback<Partida>() {
                         @Override
                         public void onResponse(Call<Partida> call, Response<Partida> response) {
-                            ResultadoDialog("Parabéns", "Você venceu", IdJogador, EmailJogador);
+                            ResultadoDialog("Parabéns", "Você venceu", usuario);
                         }
 
                         @Override
                         public void onFailure(Call<Partida> call, Throwable t) {
-                            FalhaRequisicaoDialog("Atenção", "Não foi possível armazenar informações da sua partida, verifique seu status de internet");
+                            FalhaRequisicaoDialog("Atenção", "Não foi possível armazenar informações da sua partida, verifique seu status de internet", usuario);
                         }
                     });
                 }
@@ -321,19 +330,19 @@ public class JogoNivel02 extends AppCompatActivity {
                         String duracaoFinal = formatoDuracao.format(duracao);
                         String data = formatoData.format(LocalDate.now());
 
-                        Partida partidaDerrota = new Partida(1,IdJogador,IdPalavra,data,duracaoFinal,"d", Tentativas,0);
+                        Partida partidaDerrota = new Partida(1,usuario.getPaciente().getId(),IdPalavra,data,duracaoFinal,"d", Tentativas,0);
                         Log.i("Peredeu", partidaDerrota.toString());
                         Call<Partida> partidaCall = partidaDerrota.Cadastrar(partidaDerrota);
 
                         partidaCall.enqueue(new Callback<Partida>() {
                             @Override
                             public void onResponse(Call<Partida> call, Response<Partida> response) {
-                                ResultadoDialog("Derrota", "Que pena, você perdeu. Tente novamente", IdJogador, EmailJogador);
+                                ResultadoDialog("Derrota", "Que pena, você perdeu. Tente novamente", usuario);
                             }
 
                             @Override
                             public void onFailure(Call<Partida> call, Throwable t) {
-                                FalhaRequisicaoDialog("Atenção", "Não foi possível armazenar informações da sua partida, verifique seu status de internet");
+                                FalhaRequisicaoDialog("Atenção", "Não foi possível armazenar informações da sua partida, verifique seu status de internet", usuario);
                             }
                         });
                     }
@@ -344,13 +353,13 @@ public class JogoNivel02 extends AppCompatActivity {
             btn_jogo_nivel_02_desistir.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ConfirmarDesistenciaDialog("Atenção", "Deseja realmente desistir", IdJogador, EmailJogador, IdPalavra, DataInicial, Tentativas);
+                    ConfirmarDesistenciaDialog("Atenção", "Deseja realmente desistir", usuario, IdPalavra, DataInicial, Tentativas);
                 }
             });
         }
     }
 
-    private void FalhaRequisicaoDialog(String titulo, String mensagem){
+    private void FalhaRequisicaoDialog(String titulo, String mensagem, final Usuario usuario){
         try {
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setTitle(titulo)
@@ -360,6 +369,15 @@ public class JogoNivel02 extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Intent intent = new Intent(getApplicationContext(),Home.class);
+                            intent.putExtra("id", String.valueOf(usuario.getId()));
+                            intent.putExtra("email", usuario.getEmail());
+                            intent.putExtra("nome", usuario.getNome());
+                            intent.putExtra("sobrenome", usuario.getSobrenome());
+                            intent.putExtra("senha", usuario.getSenha());
+                            intent.putExtra("dtNascimento", usuario.getDtNascimento());
+                            intent.putExtra("tipo", String.valueOf(usuario.getTipo()));
+                            intent.putExtra("idPaciente", String.valueOf(usuario.getPaciente().getId()));
+                            intent.putExtra("nickname", usuario.getPaciente().getNickname());
                             startActivity(intent);
                         }
                     }).create();
@@ -387,7 +405,7 @@ public class JogoNivel02 extends AppCompatActivity {
         }
     }
 
-    private void ResultadoDialog(String titulo, String mensagem, final int id, final String email){
+    private void ResultadoDialog(String titulo, String mensagem, final Usuario usuario){
         try {
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setTitle(titulo)
@@ -397,8 +415,15 @@ public class JogoNivel02 extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Intent intent = new Intent(getApplicationContext(),Home.class);
-                            intent.putExtra("nome", id);
-                            intent.putExtra("email", email);
+                            intent.putExtra("id", String.valueOf(usuario.getId()));
+                            intent.putExtra("email", usuario.getEmail());
+                            intent.putExtra("nome", usuario.getNome());
+                            intent.putExtra("sobrenome", usuario.getSobrenome());
+                            intent.putExtra("senha", usuario.getSenha());
+                            intent.putExtra("dtNascimento", usuario.getDtNascimento());
+                            intent.putExtra("tipo", String.valueOf(usuario.getTipo()));
+                            intent.putExtra("idPaciente", String.valueOf(usuario.getPaciente().getId()));
+                            intent.putExtra("nickname", usuario.getPaciente().getNickname());
                             startActivity(intent);
                         }
                     }).create();
@@ -408,7 +433,7 @@ public class JogoNivel02 extends AppCompatActivity {
         }
     }
 
-    private void ConfirmarDesistenciaDialog(String titulo, String mensagem, final int IdJogador, final String EmailJogador, final int IdPalavra, final LocalTime DataInicial, final int Tentativas){
+    private void ConfirmarDesistenciaDialog(String titulo, String mensagem, final Usuario usuario, final int IdPalavra, final LocalTime DataInicial, final int Tentativas){
         try {
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setTitle(titulo)
@@ -426,19 +451,19 @@ public class JogoNivel02 extends AppCompatActivity {
                             String duracaoFinal = formatoDuracao.format(duracao);
                             String data = formatoData.format(LocalDate.now());
 
-                            Partida partidaDesistencia = new Partida(1,IdJogador,IdPalavra,data,duracaoFinal,"d", Tentativas,0);
+                            Partida partidaDesistencia = new Partida(1,usuario.getPaciente().getId(),IdPalavra,data,duracaoFinal,"d", Tentativas,0);
                             Log.i("Partida desistência", partidaDesistencia.toString());
                             Call<Partida> partidaCall = partidaDesistencia.Cadastrar(partidaDesistencia);
 
                             partidaCall.enqueue(new Callback<Partida>() {
                                 @Override
                                 public void onResponse(Call<Partida> call, Response<Partida> response) {
-                                    ResultadoDialog("Desistência", "Que pena, você desistiu. Não deixe isso se tornar um hábito, você consegue", IdJogador, EmailJogador);
+                                    ResultadoDialog("Desistência", "Que pena, você desistiu. Não deixe isso se tornar um hábito, você consegue", usuario);
                                 }
 
                                 @Override
                                 public void onFailure(Call<Partida> call, Throwable t) {
-                                    FalhaRequisicaoDialog("Atenção", "Não foi possível cadastrar sua partida, verifique seu status de internet");
+                                    FalhaRequisicaoDialog("Atenção", "Não foi possível cadastrar sua partida, verifique seu status de internet", usuario);
                                 }
                             });
                         }

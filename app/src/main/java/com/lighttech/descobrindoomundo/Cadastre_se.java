@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import com.lighttech.descobrindoomundo.Models.Usuario;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -74,7 +78,12 @@ public class Cadastre_se extends AppCompatActivity {
 
                 switch (tipo){
                     case 1:
-                        Usuario usuarioPaciente = new Usuario(nome, sobrenome, email, senha, dtNascimento, tipo, nickname);
+                        String[] arrayData = dtNascimento.split("/");
+                        DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+                        LocalDate dataFormatada = LocalDate.parse(arrayData[2] + "-" + arrayData[1] + "-" + arrayData[0]);
+                        String dataFinalFormatada = formatoData.format(dataFormatada);
+
+                        Usuario usuarioPaciente = new Usuario(nome, sobrenome, email, senha, dataFinalFormatada, tipo, nickname);
                         Call<Usuario> usuarioCallPaciente = usuarioPaciente.Cadastrar(usuarioPaciente);
 
                         usuarioCallPaciente.enqueue(new Callback<Usuario>() {
@@ -82,6 +91,7 @@ public class Cadastre_se extends AppCompatActivity {
                             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                                 if (!response.isSuccessful()){
                                     UsuarioDialogErro("Não foi possível cadastrar suas informações");
+                                    Log.e("ERRO: ", response.toString());
                                 }
                                 else{
                                     UsuarioDialogSucesso("Usuário cadastrado");
@@ -97,6 +107,7 @@ public class Cadastre_se extends AppCompatActivity {
 
                     case 2:
                         Usuario usuarioProfissional = new Usuario(nome, sobrenome, email, senha, dtNascimento, tipo, Integer.parseInt(crm));
+                        Log.i("Usuario profissional", usuarioProfissional.toString());
                         Call<Usuario> usuarioCallProfissional = usuarioProfissional.Cadastrar(usuarioProfissional);
 
                         usuarioCallProfissional.enqueue(new Callback<Usuario>() {

@@ -11,7 +11,8 @@
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@id/ll_input_usuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,15 +33,17 @@
     </RadioGroup>
 
     <LinearLayout
+        android:id="@+id/ll_input_usuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_cadastro_cadastrar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/rd_btn_group"
-        app:layout_constraintTop_toBottomOf="@+id/rd_btn_group"
-        app:layout_constraintVertical_bias="0.100000024">
+        app:layout_constraintTop_toBottomOf="@+id/rd_btn_group">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -96,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textEmailAddress" />
         </LinearLayout>
 
         <LinearLayout
@@ -115,7 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textPassword" />
         </LinearLayout>
 
         <LinearLayout
@@ -134,7 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textPassword" />
         </LinearLayout>
 
         <LinearLayout
@@ -153,7 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="date" />
         </LinearLayout>
 
         <LinearLayout
@@ -191,7 +194,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="number" />
         </LinearLayout>
 
     </LinearLayout>
@@ -200,7 +203,7 @@
         android:id="@+id/btn_cadastro_cadastrar"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="24dp"
         android:background="@android:color/holo_green_light"
         android:text="Cadastrar"
         android:textColor="@color/ltBranco"
